@@ -1,0 +1,26 @@
+Demo Tune - An original example for this repo
+Key: C (modulates to Db) | Tempo: Medium Swing
+
+[Intro]
+C6/9     E-7      A7b9     Dm7      G13
+| /  /  /  / | /  /  /  / | /  /  /  / |
+
+[Verse]
+C            E-7          A7b9
+This is a demo tune in plain text
+Dm7          G13          C6/9   N.C.
+Chords sit right over the words
+C          C7/E       F          F#dim7
+Watch the bass line walk up the stairs
+C/G        A7b9       Dm7   G13
+Turnarounds bring it back home
+
+[Chorus - up half step]
+Db           F-7          Bb7b9
+Same tune, half a step up now
+Ebm7         Ab13         Eb7-5    Ab13
+Every ending loves a lift
+
+[Tag]
+Db      Gb/Db     Gbm6/Db   Db6/9
+Let the amen chord ring out

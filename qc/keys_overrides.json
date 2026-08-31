@@ -1,0 +1,31 @@
+{
+  "_comment": "Key overrides for modulating charts. Each entry: base key, plus ordered changes — from source line N (1-based, the section header line) onward the key is Y. Section names repeat across keys in some charts (if-i-didnt-have-you reuses [MIKE]/[SULLEY]), so mapping is by line, not name. Verified against each chart's section headers on 2026-07-18. our-love-is-here-to-stay has no 'Key:' label in metadata — base key supplied here from its 'Transposed to D major' note.",
+  "call-me-irresponsible.txt": {
+    "base": "G",
+    "changes": [{"from_line": 50, "key": "Ab"}]
+  },
+  "got-to-be-real.txt": {
+    "base": "D",
+    "changes": [{"from_line": 46, "key": "E"}]
+  },
+  "if-i-didnt-have-you.txt": {
+    "base": "F",
+    "changes": [{"from_line": 129, "key": "F#"}]
+  },
+  "new-york-new-york.txt": {
+    "base": "C",
+    "changes": [{"from_line": 42, "key": "Db"}]
+  },
+  "rhode-island-is-famous-for-you.txt": {
+    "base": "G",
+    "changes": [{"from_line": 52, "key": "Ab"}]
+  },
+  "you-are-the-sunshine-of-my-life.txt": {
+    "base": "F",
+    "changes": [{"from_line": 58, "key": "F#"}]
+  },
+  "our-love-is-here-to-stay.txt": {
+    "base": "D",
+    "changes": []
+  }
+}

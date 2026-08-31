@@ -1,0 +1,12 @@
+__pycache__/
+.DS_Store
+.pytest_cache/
+.venv/
+
+# build output — regenerate with: python3 fakebook/build.py
+fakebook/*.pdf
+
+# QC working dirs (corpus-derived output; never commit)
+qc/audit/
+qc/reports/
+qc/backups/
