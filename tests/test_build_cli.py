@@ -95,6 +95,42 @@ def test_cli_include_list_missing_chart_errors(tmp_path):
     assert not out.exists()
 
 
+def test_is_chart_file(tmp_path):
+    chart = tmp_path / "alpha-song.txt"
+    chart.write_text(CHART_A, encoding="utf-8")
+    data = tmp_path / "list.txt"
+    data.write_text("# an include list, not a chart\nalpha-song.txt\n",
+                    encoding="utf-8")
+    empty = tmp_path / "empty.txt"
+    empty.write_text("\n \n", encoding="utf-8")
+    assert build.is_chart_file(chart)
+    assert not build.is_chart_file(data)
+    assert not build.is_chart_file(empty)
+
+
+def test_cli_skips_comment_headed_data_files(tmp_path):
+    # A '#'-headed .txt sitting in the charts dir (e.g. an include list)
+    # must not be rendered into the book as a tune.
+    charts = _write_charts(tmp_path)
+    (charts / "public_domain_list.txt").write_text(
+        "# Public-domain edition include list\nalpha-song.txt\n",
+        encoding="utf-8")
+    out = tmp_path / "book.pdf"
+
+    result = subprocess.run(
+        [sys.executable, str(BUILD_PY),
+         "--charts-dir", str(charts),
+         "--output", str(out)],
+        capture_output=True, text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert "Building fake book with 2 tunes" in result.stdout
+
+    with pdfplumber.open(out) as pdf:
+        toc_text = pdf.pages[0].extract_text()
+    assert "include list" not in toc_text
+
+
 def test_default_invocation_unchanged(tmp_path):
     # No flags → same defaults as before (charts/ + fakebook/fakebook.pdf).
     # Run --help to confirm argparse doesn't break plain invocation semantics.
