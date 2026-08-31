@@ -168,7 +168,8 @@ def lint_file(path: Path) -> list:
 
 def main(argv):
     targets = ([Path(a) for a in argv[1:]]
-               or sorted((REPO / "charts").glob("*.txt")))
+               or sorted(f for f in (REPO / "charts").glob("*.txt")
+                         if build.is_chart_file(f)))
     all_f = []
     for t in targets:
         all_f.extend(lint_file(t))

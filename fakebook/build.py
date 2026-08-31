@@ -115,6 +115,17 @@ def is_chord_line(line: str) -> bool:
 # Parser
 # ---------------------------------------------------------------------------
 
+def is_chart_file(filepath: Path) -> bool:
+    """A charts-dir .txt is a chart unless its first non-blank line is a '#'
+    comment — that marks a data file (e.g. an include list kept alongside the
+    charts), which must never be rendered as a tune."""
+    for raw in filepath.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if line:
+            return not line.startswith("#")
+    return False
+
+
 def parse_chart(filepath: Path) -> dict:
     """Parse a .txt chord chart into structured data."""
     lines = filepath.read_text(encoding="utf-8").splitlines()
@@ -473,7 +484,7 @@ def main():
         print(f"Error: charts directory not found at {charts_dir}")
         sys.exit(1)
 
-    txt_files = sorted(charts_dir.glob("*.txt"))
+    txt_files = sorted(f for f in charts_dir.glob("*.txt") if is_chart_file(f))
     if not txt_files:
         print(f"No .txt files found in {charts_dir}")
         sys.exit(1)
