@@ -370,11 +370,45 @@ class FakeBookRenderer:
         for m in re.finditer(r'\S+', text):
             self.c.drawString(MARGIN_LEFT + m.start() * CHAR_W, self.y, m.group())
 
+    @staticmethod
+    def _lead_height(lines, items: int = 2) -> float:
+        """Vertical space taken by a section's first `items` drawn items.
+
+        A chord line followed by a lyric line is one item (they are drawn as
+        a pair); a lone chord line, a lone lyric line (e.g. a bar-slash vamp
+        line) is one item; blank lines are skipped. Mirrors the spacing in
+        _render_section, so keep the two in step.
+        """
+        height = 0.0
+        drawn = 0
+        i = 0
+        while i < len(lines) and drawn < items:
+            kind = lines[i][0]
+            if kind == "blank":
+                i += 1
+                continue
+            if kind == "chords":
+                if i + 1 < len(lines) and lines[i + 1][0] == "lyrics":
+                    height += CHORD_SIZE + CHORD_LYRIC_GAP + LYRIC_SIZE + LINE_PAIR_AFTER
+                    i += 2
+                else:
+                    height += CHORD_SIZE + CHORD_LYRIC_GAP + SINGLE_LINE_AFTER
+                    i += 1
+            else:
+                height += LYRIC_SIZE + SINGLE_LINE_AFTER
+                i += 1
+            drawn += 1
+        return height
+
     def _render_section(self, section: dict):
         """Render a song section (header + chord/lyric lines)."""
         # Section header
         if section["name"]:
-            self._check_space(SECTION_BEFORE + SECTION_SIZE + SECTION_AFTER + 30)
+            # Keep the header with at least its first two lines: a header
+            # stranded at the page bottom with one line under it forces a
+            # page turn mid-section (seen on Pink Pony Club's bridge).
+            lead = max(self._lead_height(section["lines"]), 30)
+            self._check_space(SECTION_BEFORE + SECTION_SIZE + SECTION_AFTER + lead)
             self.y -= SECTION_BEFORE
             self.c.setFont("Helvetica-Bold", SECTION_SIZE)
             self.c.drawString(MARGIN_LEFT, self.y, f"[{section['name']}]")
