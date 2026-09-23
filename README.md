@@ -81,6 +81,8 @@ The private book behind this tool has ~70 tunes. Lyrics are copyrighted, so the 
 
 Tested with Python 3.13, reportlab 4.4, pytest 8.3, pdfplumber 0.11.
 
+The write-up, and a public-domain edition of the fake book: [gizmowarehouse.org/gizmo/fakebook-maker](https://gizmowarehouse.org/gizmo/fakebook-maker). How I use Claude Code to write gospel reharmonizations for it: [gizmowarehouse.org/gizmo/gospel-of-claude-code](https://gizmowarehouse.org/gizmo/gospel-of-claude-code).
+
 ## License
 
 MIT. The demo charts are included under the same license; Danny Boy's text is public domain.
